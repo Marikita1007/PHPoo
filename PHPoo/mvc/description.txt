@@ -1,0 +1,139 @@
+En procédural, il peut parfois être difficile d'organiser son code, car on mélange PHP et HTML
+
+Le concept MVC va permettre d'effectuer une séparation des couches et des langages
+
+1. Modèle (Model) ( Echange avec la BDD - SQL )
+2. Vue (View) (Affichage et présentation des données - HTML/CSS/JS )
+3. Contrôleur (Controller) (Traitements PHP, contrôles)
+
+exemple : l'internaute souhaite voir tous les pantalons
+
+a - le controller va demander au modèle d'aller chercher les pantalons
+b - le model va faire une requête SQL filtrant sur la colonne catégorie='pantalons' et renvoyer le résultat au controller
+c - le controller génère une pagination (10 par 10) et renvoie la View
+d - l'internaute reçoit la vue avec la liste des pantalons
+
+L'HTML n'est pas toléré dans le model ni dans le controller
+Le SQL n'est pas toléré dans le controller ni dans la view
+Le PHP sera surtout utilisé dans le controller pour les traitements (conditions, boucles)
+    on trouvera un peu de PHP :
+        - dans le model pour les requetes ($pdo->prepare())
+        - dans la vue pour l'affichage des variables (echo, foreach)
+
+En PHP il est difficile de ne pas utiliser le langage dans le model et la view, on parle d'approche MVC.
+
+Il y a UN point d'entrée (index.php)
+Pendant la navigation, l'internaute a l'impression de changer de page, mais en réalité ce sont les pages (vues) qui viennent à lui.
+
+Dans le controller
+    Les FrontController ( récupèrent les actions demandées par l'internaute) appellent les BackController pour tracer les bonnes routes.
+
+En marge du MVC, on parle des notions : Entité (employes), Managers (ErrorManager,PDOManager,...)
+
+Avantages:
+    - clarté de l'architecture
+        (si on doit opérer un changement au niveau requetes SQL, on ne s'interessera qu'aux fichiers du modèle)
+    - favorise le travail en équipe et les mises à jour
+
+Inconvénients:
+    - nombre de fichiers plus important ( trop complexe pour de petites applications) Le temps accordé à l'architecture peut ne pas être rentable pour le projet.
+
+En MVC, avant de pouvoir visualiser la première vue, on doit avoir établi la "route" complète  controller --> model --> controller --> vue
+
+Le projet à réaliser : CRUD => employés
+
+BDD : entreprise_mvc
+Table : Employes
+id_employe : INT AI PK
+prenom : varchar(50)
+nom : varchar(50)
+salaire : float
+
+- Projet
+    - Model/
+        - Employes.class.php  (EntityRepository)
+        - EmployesManager.class.php
+        - Model.class.php
+    - Controller/
+        - EmployesController.class.php (par convention les noms des controller commence par une majuscule)
+    - Public/
+        function.js
+        style.css
+    - View/
+        - employes.view.php
+        - formulaire.view.php
+        - template.view.php
+    - index.php
+    - autoload.php
+
+
+
+手続き型(En procédural)では、PHPとHTMLが混在するため、コードを整理するのが難しい場合があります。
+
+MVCコンセプトにより、レイヤー（層）と言語の分離が可能になる(des couches et des langages)
+
+1. モデル（DB(データベース)とのやり取り-SQL)
+2. 表示　View (データの表示・演出 - HTML/CSS/JS )
+3. コントローラ（PHPの処理、制御)
+
+例：ユーザーがすべてのズボン(les pantalons)を見たい場合
+
+a - コントローラがモデルにズボン(les pantalons)の取得を依頼する。
+b - モデルが category='trousers' カラムにフィルタリングするSQLクエリを作成し、その結果をコントローラに返す。
+c - コントローラがページネーション（10×10）を生成し、ビュー(la View)を返します。
+d - ユーザーはズボンのリストを含むビューを受け取ります。
+
+モデルでもコントローラでもHTMLは許されない（モデル・コントローラフォルダのこと）
+コントローラでもビューでもSQLは許されない（ビュー・コントローラフォルダのこと）
+PHPは主にコントローラ内の処理（条件、ループ）に使用されます。
+    私たちは、いくつかのPHPを見つけます。
+        - クエリ用のモデルで ($pdo->prepare())
+        - 変数を表示するためのビュー（echo、foreach）では
+
+PHPでは、モデルとビューの間で言語を使わないことは難しく、MVCアプローチと呼ばれています。
+
+エントリーポイントは1つ（index.php）です。
+ナビゲーション中、ユーザーはページを変える印象を持ちますが、実際にはページ（ビュー）が来ます。
+
+コントローラーに
+    FrontController（ユーザーから要求されたアクションを取得する）はBackControllerを呼び出し、正しいルートをトレースします。
+
+MVCの余白では、エンティティ(従業員)、マネージャ(ErrorManager,PDOManager,...)という概念について話しています。
+
+優位性があります。
+    - アーキテクチャの明快さ
+        (SQLクエリレベルの変更が必要な場合は、モデルファイルにのみ関心を持つことになります)
+    - チームワークとアップデートを重視する
+
+デメリットです。
+    - ファイル数が多い（小規模なアプリケーションには複雑すぎる） アーキテクチャに費やす時間が、プロジェクトの費用対効果に合わない可能性がある。
+
+MVCでは、最初のビューを見る前に、コントローラ→モデル→コントローラ→ビューという完全な「ルート」を確立する必要があります。
+
+実施するプロジェクト：CRUD => employés
+
+BDD : entreprise_mvc
+Table : Employes
+id_employe : INT AI PK
+prenom : varchar(50)
+nom : varchar(50)
+salaire : float
+
+- プロジェクト
+    - モデル/
+        - Employes.class.php (EntityRepository)
+        - EmployesManager.class.php
+        -Model.class.php
+    - コントローラ/
+        - EmployesController.class.php (規約により、コントローラ名は大文字で始まります)
+    - 公開
+        function.js
+        スタイル.css
+    - ビュー
+        - employees.view.php
+        - form.view.php
+        - template.view.php
+    - index.php
+    - autoload.php
+
+
